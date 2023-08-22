@@ -4,7 +4,7 @@ pipeline {
         go 'go-1.19' // Comes from the jenkins global config
     }
     environment {
-        ENV = "${env.BRANCH_NAME == 'develop' ? 'PROD' : 'DEV'}" // Define the ENV based on the branch name
+        ENV = "${env.BRANCH_NAME == 'main' ? 'PROD' : 'DEV'}" // Define the ENV based on the branch name
     }
 
     stages {
