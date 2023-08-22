@@ -2,7 +2,7 @@ package main
 
 import (
     "encoding/json"
-    "fmt"
+   "fmt"
     "net/http"
     "os"
     "time"
@@ -25,47 +25,6 @@ func init() {
         }
 
         if branch == "" {
-            fmt.Println("BRANCH can't be empty.")
-            os.Exit(1)         
-        }
-    }
-}
+            fmt.Prin
 
-type Response struct {
-    Description string    `json:"description"`
-    Environment string    `json:"environment"`
-    Time        time.Time `json:"time"`
-}
 
-func basicAPI(w http.ResponseWriter, r *http.Request) {
-
-    if r.URL.Path != "/" {
-        http.NotFound(w, r)
-        return
-    }
-    resp := Response{
-        Description: fmt.Sprintf("You're viewing the %v api, deployed from branch %v", env, branch),
-        Environment: env,
-        Time:        time.Now(),
-    }
-    jsonResp, err := json.Marshal(&resp)
-    if err != nil {
-        w.Write([]byte("Error"))
-        return
-    }
-
-    w.Write(jsonResp)
-}
-
-func main() {
-    http.HandleFunc("/", basicAPI)
-
-    var serverPort string
-    if env == "DEV" {
-        serverPort = ":4040"
-    } else {
-        serverPort = ":5050"
-    }
-    fmt.Printf("Starting server on port %v...", serverPort)
-    http.ListenAndServe(serverPort, nil)
-}
